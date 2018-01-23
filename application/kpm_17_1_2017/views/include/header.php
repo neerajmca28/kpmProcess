@@ -1,0 +1,45 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<style>        input {  padding: .5em;}label{    padding-top: 3px;    line-height: 2.5em;}.containerform {  width: 100%;  display: flex;  justify-content: space-between;  align-items: center;  margin-bottom: .5em;}    </style>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <title>Market Vehicle Portal</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="description" content="Elephant is a front-end template created to help you build modern web applications, fast and in a professional manner.">
+    <meta property="og:url" content="http://demo.naksoid.com/elephant">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="The fastest way to build modern admin site for any platform, browser, or device">
+    <meta property="og:description" content="Elephant is a front-end template created to help you build modern web applications, fast and in a professional manner.">
+    <meta property="og:image" content="../../elephant/img/ae165ef33d137d3f18b7707466aa774d.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@naksoid">
+    <meta name="twitter:creator" content="@naksoid">
+    <meta name="twitter:title" content="The fastest way to build modern admin site for any platform, browser, or device">
+    <meta name="twitter:description" content="Elephant is a front-end template created to help you build modern web applications, fast and in a professional manner.">
+    <meta name="twitter:image" content="../../elephant/img/ae165ef33d137d3f18b7707466aa774d.jpg">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="manifest.json">
+    <link rel="mask-icon" href="safari-pinned-tab.svg" color="#0288d1">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400italic,500,700">
+    <link rel="stylesheet" href="<?= base_url(); ?>assets/css/vendor.min.css">
+    <link rel="stylesheet" href="<?= base_url(); ?>assets/css/elephant.min.css">
+    <link rel="stylesheet" href="<?= base_url(); ?>assets/css/application.min.css">
+    <link rel="stylesheet" href="<?= base_url(); ?>assets/css/demo.min.css">
+    <link rel="stylesheet" href="<?= base_url(); ?>assets/css/mycss.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="<?= base_url(); ?>assets/js/myjs.js"></script>
+    <script type="text/javascript" language="javascript" src="<?= base_url(); ?>assets/js/function.js"></script>
+</head>
+<body class="layout layout-header-fixed">
+
+
+
+
+
+

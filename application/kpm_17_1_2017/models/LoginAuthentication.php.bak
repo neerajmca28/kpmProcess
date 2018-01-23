@@ -1,0 +1,51 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+class LoginAuthentication extends CI_Model {
+	
+	public function loginCheck($username, $password) {
+ 
+
+ if($username=="kpm" and $password=="kpm@456")
+		{
+			$myObj = array(
+				"resultLogin" => true,
+				"username" => $username
+			);
+			return $myObj;
+		}
+ 
+
+	}
+
+	public function loginCheckTemp($username, $password) {
+
+	 	$myObj = array(
+				"resultLogin" => true,
+				"username" => $username
+			);
+			 
+
+
+	}
+
+	public function setSession($username){
+
+		 
+		$newdata = array(
+
+	        'user_name'			=>"kpm",
+		    'userId'			=> "1",
+		    'ParentId'			=> "1",
+		    'BranchId'			=>  "1",
+		    'support_group_id'  =>  "1",
+		    'isadmin'			=>  "1",
+			'email'				=>  "1",
+		);
+
+		$this->session->set_userdata($newdata);
+
+		return true;
+	}
+
+}

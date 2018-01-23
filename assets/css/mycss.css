@@ -1,0 +1,16 @@
+#Showrequest.form-control{
+	align:right;
+	margin-left: -05%;
+	width:105%;
+
+}
+select{
+	border:none;
+}
+
+.layout-sidebar-body{
+	margin-top: 4%;
+}
+.sidenav-label #active {
+  text-indent: 20px;
+}
