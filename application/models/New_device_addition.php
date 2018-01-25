@@ -16,12 +16,14 @@ class New_device_addition extends CI_Model {
                 inventory.sim on device.sim_id=sim.sim_id where  device.device_status=64   
                 and ChallanDetail.CurrentRecord=1 and ChallanDetail.installerid='".$installerId."'";
               $query = $this->inventory_db->query($sql_sel);
+
+              //print_r($query);die;
             //and ChallanDetail.branchid=1
             return $query->result_array();
       }
 
       public function select_query_live_con($userId)
-      {
+      {//echo $userId;die;
           $CI = &get_instance();
         $this->matrix_db = $CI->load->database('matrix_db', TRUE);
          $sql_sel="select name,id from matrix.pois where sys_user_id='  ".$userId."' ";
@@ -34,6 +36,8 @@ class New_device_addition extends CI_Model {
       {
           $CI = &get_instance();
           $this->matrix_db = $CI->load->database('matrix_db', TRUE);
+
+          //echo "select veh_reg,services.id,sys_device_id,imei from services left join devices on services.sys_device_id=devices.id  where services.id in (select sys_service_id from group_services where sys_group_id='".$groupId."' and active=1)";die;
           $sql_sel="select veh_reg,services.id,sys_device_id,imei from services left join devices on services.sys_device_id=devices.id  where services.id in (select sys_service_id from group_services where sys_group_id='".$groupId."' and active=1)";
               $query = $this->matrix_db->query($sql_sel);
             

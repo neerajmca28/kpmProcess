@@ -15,8 +15,10 @@ class Welcome extends CI_Controller {
 	}
 
 	public function authentication(){
-		$username = $this->input->post('username');
-		 $password = $this->input->post('password'); 
+		echo $username = $this->input->post('username');
+		echo $password = $this->input->post('password'); 
+
+		 //echo $username;die;
 
 		$loginValue = $this->LoginAuthentication->loginCheck($username,$password);
 

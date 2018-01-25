@@ -48,7 +48,15 @@
                <a href="<?php echo base_url().'support/asTotalDevices' ?>">
                 <span class="badge badge-success"></span>
                 <span class="sidenav-icon icon icon-refresh"></span>
-                <span class="sidenav-label">Stock</span>
+                <span class="sidenav-label">View stock</span>
+              </a>
+            </li>
+
+             <li class="sidenav-item">
+               <a href="<?php echo base_url().'support/asTotalDevices' ?>">
+                <span class="badge badge-success"></span>
+                <span class="sidenav-icon icon icon-refresh"></span>
+                <span class="sidenav-label">Tripped LR</span>
               </a>
             </li>
         <!--      <li class="sidenav-item">

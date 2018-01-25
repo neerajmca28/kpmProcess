@@ -46,6 +46,18 @@ public function __construct()
     
     public function form_NewDeviceAddition()
     {
+
+
+        $data_lrnumber = array();
+        for ($i = 0; $i < $this->input->post('lr_number'); $i++) {
+            $data_lrnumber[$i] = array(
+                'lr_number' => $this->input->post('lr_no')[$i],
+                'lr_emailid' => $this->input->post('lr_emailid')[$i],
+                'lr_destination' => $this->input->post('lr_destination')[$i]
+            );
+        }
+
+        //print_r($data_lrnumber);die;
         $user_id_live = $this->session->userdata['user_id_live'];
           $groupId = $this->session->userdata['group_id'];
          $installerId = $this->session->userdata['installerId'];
@@ -78,11 +90,11 @@ public function __construct()
             $datestr=$this->input->post('date');
              $datetime=date('Y-m-d H:i:s',strtotime($timestr.' '.$datestr));
 
- $data = array(
+            $data = array(
             'date' => $this->input->post('date'),
             'customer_name' => $this->input->post('customer_name'),
             'truck_no' => $this->input->post('truck_no'),
-            'device_imei' => $this->input->post('device_imei'),
+            'device_imei' => '0351608081599461',
             'destination' => $this->input->post('destination'),
             'warehouse' => $this->input->post('warehouse'),
             'transport_name' => $this->input->post('transport_name'),
@@ -100,8 +112,8 @@ public function __construct()
             );
             //print_r($data); die;
             //Transfering data to Model
-            $output=$this->SupportModel->new_device_additionclose($data);
-           // print_r($output); die;
+            $output=$this->SupportModel->new_device_additionclose($data,$data_lrnumber);
+            //print_r($output); die;
             if($output==1)
             {
                 $result['assign_device']=$this->New_device_addition->select_query_inventory($installerId );
@@ -297,9 +309,9 @@ $timestr=$this->input->post('time');
     {
         //$RecordId = $this->uri->segment(3);
 
-       $user_id_live = $this->session->userdata['user_id_live'];
-          $groupId = $this->session->userdata['group_id'];
-         $installerId = $this->session->userdata['installerId'];
+        $user_id_live = $this->session->userdata['user_id_live'];
+        $groupId = $this->session->userdata['group_id'];
+        $installerId = $this->session->userdata['installerId'];
 
         $this->load->view('include/header');
         $this->load->view('include/headerMenu');
@@ -310,7 +322,7 @@ $timestr=$this->input->post('time');
             // print_r($this->input->post()); die;
         $this->load->view('support/vehicle_change',$result);
         
-      $this->load->view('include/footer');
+        $this->load->view('include/footer');
 
         // $this->load->view('support/deviceAddtionForm',$result);
         
@@ -352,6 +364,19 @@ $timestr=$this->input->post('time');
 
 	public function vehicleNoChangeSubmision()
     {
+
+        $data_lrnumber = array();
+        for ($i = 0; $i < count($this->input->post('lr_number')); $i++) {
+            $data_lrnumber[$i] = array(
+                'lr_number' => $this->input->post('lr_number')[$i],
+                'lr_emailid' => $this->input->post('lr_emailid')[$i],
+                'lr_destination' => $this->input->post('lr_destination')[$i]
+            );
+        }
+
+        //print_r($data_lrnumber);die;
+
+        // echo "<pre>";print_r($data_lrnumber);die;
          $user_id_live = $this->session->userdata['user_id_live'];
           $groupId = $this->session->userdata['group_id'];
          $installerId = $this->session->userdata['installerId'];
@@ -361,6 +386,7 @@ $timestr=$this->input->post('time');
         $this->load->view('include/headerMenu');
         $this->load->view('include/leftMenu');
 
+        
          $timestr=$this->input->post('time');
             $datestr=$this->input->post('date');
              $datetime=date('Y-m-d H:i:s',strtotime($timestr.' '.$datestr));
@@ -388,10 +414,14 @@ $timestr=$this->input->post('time');
 			'device_imei' => $this->input->post('hidden_imei')
 
             );
+
+      
         //print_r($data); die;
         ///$this->load->view('support/vehicle_change',$result);
 
-      $this->SupportModel->changeVehicle($data);
+      $this->SupportModel->changeVehicle($data,$data_lrnumber);
+
+
        $result['query']=$this->New_device_addition->get_dev_addition_list($groupId);
                 // redirect('/Support/');
                 $this->load->view('support/list_device_addition',$result);
@@ -511,7 +541,7 @@ $timestr=$this->input->post('time');
         // $result['device_imei']=$tt;
         // $result['device_no']=$sno;
      $result['query']=$this->New_device_addition->get_dev_unmapped_list($groupId);
-      //echo '<pre>'; print_r($result); die;
+    
          $this->load->view('support/stockDevices',$result);
 
          $this->load->view('include/footer');
@@ -534,7 +564,7 @@ $timestr=$this->input->post('time');
         $this->load->view('include/headerMenu');
         $this->load->view('include/leftMenu');
         $result['query']=$this->New_device_addition->get_dev_reached_dest_list($groupId);
-          //echo '<pre>'; print_r($result); die;
+    
          $this->load->view('support/destinationDevices',$result);
          $this->load->view('include/footer');
         
@@ -556,15 +586,32 @@ $timestr=$this->input->post('time');
         $this->load->view('include/header');
         $this->load->view('include/headerMenu');
         $this->load->view('include/leftMenu');
-        $result['query']=$this->New_device_addition->get_dev_total_list($groupId,$installerId);
+        //$result['query']=$this->New_device_addition->get_dev_total_list($groupId,$installerId);
         //echo '<pre>';print_r($result); die;
-         $this->load->view('support/totalDevices',$result);
+         $this->load->view('support/list_tripped_LRNumber',$result);
          $this->load->view('include/footer');
         
         
        // $this->load->view('include/footer');
     }
 
+    public function TripLRDetails()
+    {
+        $userName = $this->session->userdata['user_name'];
+        $parentId = $this->session->userdata['ParentId'];
+        $user_id_live = $this->session->userdata['user_id_live'];
+        $groupId = $this->session->userdata['group_id'];
+        $installerId = $this->session->userdata['installerId'];
+
+        $this->load->view('include/header');
+        $this->load->view('include/headerMenu');
+        $this->load->view('include/leftMenu');
+        $result['query']=$this->SupportModel->new_device_additionclose($data);
+        $this->load->view('support/list_device_addition',$result);
+        $this->load->view('include/footer');
+        
+    }
+    
     public function asNewDevices()
     {
          $userName = $this->session->userdata['user_name'];
@@ -589,6 +636,37 @@ $timestr=$this->input->post('time');
         
         
        // $this->load->view('include/footer');
+    }
+
+    public function lr_close()
+    {
+           
+        $RecordId = $this->uri->segment(3);
+
+        $matrix_db = $this->load->database('matrix_db', TRUE);
+        $sql ="UPDATE kpm_lr_details set l_r_status=0 where id='".$RecordId."'";
+        $result = $matrix_db->query($sql);
+            
+        redirect('/Support/asTotalDevices');
+    }
+
+    public function lr_closed()
+    {
+           
+        $matrix_db = $this->load->database('matrix_db', TRUE);
+        $sql ="SELECT kpm_lr_details.id as lr_id,kpm_tripdata.to_location as tolocation,kpm_lr_details.destination as destination,kpm_lr_details.l_r_number as l_r_number,kpm_lr_details.email_id as email,kpm_tripdata.* FROM kpm_lr_details LEFT JOIN kpm_tripdata ON kpm_lr_details.mapped_veh=kpm_tripdata.id WHERE l_r_status=0";
+        $data['result'] = $matrix_db->query($sql)->result_array();
+
+        
+
+        $this->load->view('include/header');
+        $this->load->view('include/headerMenu');
+        $this->load->view('include/leftMenu');
+        $this->load->view('support/list_trip_lr_closed',$data);
+        
+        $this->load->view('include/footer');
+            
+       // redirect('/Support/list_trip_lr_closed');
     }
     
 

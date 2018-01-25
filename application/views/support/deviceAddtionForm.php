@@ -20,35 +20,17 @@
             <div class="col-md-8">
               <div class="demo-form-wrapper">
    <?php
-
-        echo form_open('support/form_NewDeviceAddition');
-        ?>
-        <form data-toggle="validator" method="post"  name="myformlisting"  id="myformlisting" class="form form-horizontal" >
- 
+          echo form_open('support/form_NewDeviceAddition');?>
+       
+        
+  
               <div class="containerform">
                     <label class="col-sm-3 control-label" for="form-control-2"  >Dispatch Date:*</label>
                     
                       <input type="text" class="form-control" name="date" id="datepicker1" value="" onkeydown="return false"  required />
                     </div>
 
-					<div class="containerform">
-                    <label class="col-sm-3 control-label" for="form-control-2"  >Trip Time:*</label>
-                    
-               <!--      
-                <div class="controls input-append date form_datetime" data-date="" data-date-format="yyyy-mm-dd hh:ii" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd hh:ii">
-                    <input class="form-control date-picker" name="dateStart" id="dateStart" size="16" type="text" value="<?= $startdate; ?>" >
-                    <span class="add-on"><i class="icon-th"></i></span> 
 
-                </div> -->
-                 <!--  <input type="text" class="form-control demo-timepicker-5" name="actual_dateTime" id="datepicker2" value="" required /> -->
-
-
-
-                <input id="demo-timepicker-5" name="time" class="form-control" type="text" onkeydown="return false"  required>
-                  <span class="icon icon-clock-o input-icon"></span>
-                  <!-- <div class="right-item"> <input type="text" name="date" id="date" value="<?php echo date('Y-m-d H:i:s');?>" class="form-control form_date"></div>
- -->
-              </div>
                   
           <div class="containerform">
                     <label class="col-sm-3 control-label" for="form-control-3">Customer Name:*</label>
@@ -63,58 +45,7 @@
                    
                   </div>
               
-                     <div class="containerform">
-                    <label class="col-sm-3 control-label" for="form-control-5">Device IMEI.*</label>
-                    
-                    <select id="demo-select2-3" name="device_imei"  class="form-control" >
-                    <option value=''>--Select IMEI</option>
-                   
-                    <?php foreach($assign_device as $row){ ?>
-                       <option value="<?php echo $row['device_imei'];?>" ><?php echo $row['device_imei'];?></option>
-                      <?php } ?>
-                    </select>
-                    </div>
-
-					<?php
-                   $user_id_live = $this->session->userdata['user_id_live'];
-                   $group_id = $this->session->userdata['group_id'];
-                   if(($user_id_live=='77727') && ($group_id=='7781'))
-                   {
-                   ?>
-                     <div class="containerform">
-                   <label class="col-sm-3 control-label" for="form-control-2">Source:*</label>
-
-                   <select name="source" id="demo-select2-2" class="form-control">
-
-
-
-                       <option value="KPM" ><?php echo "KPM";?></option>
-
-                   </select>
-
-                 </div>
-                  <?php }
-                 else
-                   {?>
-
-                     <div class="containerform">
-                   <label class="col-sm-3 control-label" for="form-control-2">Source:*</label>
-
-                   <select name="source" id="demo-select2-2" class="form-control">
-                     <option value=''>--Select Source--</option>
-
-                     <?php foreach($destination as $row){ ?>{?>
-
-                       <option value="<?php echo $row['name'];?>" ><?php echo $row['name'];?></option>
-                     <?php } ?>
-                   </select>
-
-                 </div>
-                  <?php }?>
-					
-                    
                   
-                  </div>
 
             
                     <div class="containerform">
@@ -148,14 +79,24 @@
                       <input type="value" name="transport_mob_no" id="transport_mob_no_id"  class="form-control" value="" required >
                     </div>
                   
+                 
 
-
-           <div class="containerform">
-                    <label class="col-sm-3 control-label" for="form-control-2">LR Number:</label>
-                
-                      <input type="text"  name="lr_number" id="lr_number_id"  class="form-control" value="">
+                    <div class="containerform">
+                      <label class="col-sm-3 control-label" for="form-control-9">LR Number:</label>
+                      <select name="lr_number" id="lr_number_id"  class="form-control" onchange="lrNumberRecords(this.value)">
+                        <option value="<?=$i ?>">Select LR Number</option>
+                        <?php for ($i=1; $i <=10 ; $i++) { ?> 
+                        <option value="<?=$i ?>"><?=$i; ?></option>
+                        <?php } ?>
+                      </select>
                     </div>
-                  
+
+                     
+                        <table id="textLR"></table>
+                    
+                
+
+
                 <div class="containerform">
                   <label class="col-sm-3 control-label" for="form-control-3">Driver Mob No:</label>
                       <input type="value" name="driver_mobile_no" id="driver_mobile_no_id" class="form-control">
@@ -192,6 +133,7 @@
 
                   <div class="form-group" style="margin-left: 215px;">
                    <button class="btn btn-success" type="submit">submit</button>
+
                     <button class="btn btn-success" type="reset">Cancel</button>
                   </div>
       </form>
@@ -276,7 +218,23 @@ function Check()
     }
  }
 </script>
+<script type="text/javascript">
+  function lrNumberRecords(total){
+    alert(total)
+    $("#textLR").html('');
 
+    if(total > 0){ 
+        
+              for(var i =1; i <= total; i++){
+
+                var lrRecords ='<tr><td><input type="text" class="form-control" name="lr_no[]" placeholder="L R Number" id="lr_no" required ></td><td><input type="text" class="form-control" name="lr_emailid[]" placeholder="Email Id" id="lr_emailid" required ></td><td><input type="text" class="form-control" name="lr_destination[]" placeholder="Destination" id="lr_destination" required ></td></tr>';
+
+                $("#textLR").append(lrRecords);
+
+              }
+    }    
+}
+</script>
 <script>
 var j = jQuery.noConflict();
 j(function()
@@ -288,3 +246,5 @@ j(function()
 });
 
 </script>
+
+

@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-define('log_path', '/opt/lampp/htdocs/kpmProcess/application/logs/billingLog.txt');
+define('log_path', 'C:/xampp/htdocs/kpmProcess/application/logs/billingLog.txt');
 
 /*
 |--------------------------------------------------------------------------

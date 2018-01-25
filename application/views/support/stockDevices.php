@@ -81,17 +81,17 @@
                     ?>
                       <tr>
                  <!--<td><?php echo $i+1;?></td>-->
-                  <td><?php echo $row["trip_start_date"];?></td>
-                  <td><?php echo $row["client_name"];?></td>
+                  <td><?php echo $row["veh_departuredate"];?></td>
+                  <td><?php echo $row["thana_name"];?></td>
                   <td><?php echo $row["veh_reg"];?></td>
-                  <td><?php echo $row["device_imei"];?></td>
+                  <td><?php echo $row["imei"];?></td>
                  
                  <td></td>
-                <td><?php echo $row["to_location"];?></td>
-                  <td><?php echo $row["driver_name"];?></td>
-                  <td><?php echo $row["driver_number"];?></td>
-                  <td><?php echo $row["LR_Number"];?></td>
-                  <td><?php echo $row["contact_number"];?></td>
+          <td><?php echo $row["veh_destination"];?></td>
+                  <td><?php echo $row["veh_driver_name"];?></td>
+                  <td><?php echo $row["veh_phone_number"];?></td>
+                  <td><?php echo $row["card_number"];?></td>
+                  <td><?php echo $row["driver_contact_no"];?></td>
                  <td></td>
                   <td></td>
                  

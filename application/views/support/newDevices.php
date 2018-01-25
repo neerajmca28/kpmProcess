@@ -4,7 +4,7 @@
             <div class="col-sm-10">
               <h1 class="title-bar-title">
                
-              <span class="d-ib">New Vehicle List</span>
+              <span class="d-ib">Total Vehicle List</span>
              
             </h1>
 

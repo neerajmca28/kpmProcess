@@ -131,12 +131,42 @@
                    <input type="value" name="transport_mob_no" id="transport_mob_no_id"  class="form-control" value="" required >
              
           </div>
-          <div class="containerform">
-                <label class="col-sm-3 control-label" for="form-control-9">LR Number:</label>
-              
+          <?php
+                   $user_id_live = $this->session->userdata['user_id_live'];
+                   $group_id = $this->session->userdata['group_id'];
+                   if(($user_id_live=='77727') && ($group_id=='7781'))
+                   {
+                   ?>  
+
+                    <div class="containerform">
+                      <label class="col-sm-3 control-label" for="form-control-9">LR Number:</label>
+                      <select name="lr_number" id="lr_number_id"  class="form-control" onchange="lrRecords(this.value)">
+                        <option value="<?=$i ?>">Select LR Number</option>
+                        <?php for ($i=1; $i <=10 ; $i++) { ?> 
+                        <option value="<?=$i ?>"><?=$i; ?></option>
+                        <?php } ?>
+                      </select>
+                    </div>
+
+                    <div class="containerform">
+                      <label class="col-sm-3 control-label" for="form-control-9">LR Number Details:</label>
+                        <div id="textA"></div>
+                    </div>
+                
+
+                  <?php }
+                 else
+                   {?>
+
+
+                      <div class="containerform">
+                    <label class="col-sm-3 control-label" for="form-control-2">LR Number:</label>
+                
                       <input type="text"  name="lr_number" id="lr_number_id"  class="form-control" value="">
+                  </div>
+
+                    <?php }?>
           
-          </div>
        <div class="containerform">
                 <label class="col-sm-3 control-label" for="form-control-10">Driver Mob No:</label>
                       <input type="value" name="driver_mobile_no" id="driver_mobile_no_id" class="form-control">
@@ -259,7 +289,25 @@ function Check()
     }
  }
 </script>
+<script type="text/javascript">
+  function lrRecords(total){
 
+    $("#textA").html('');
+
+    if(total > 0){ 
+        
+              var option = "<option value=''>Select LR No</option>"
+             
+              for(var i =1; i <= total; i++){
+
+                var age1 ='<tr><td><input type="text" class="form-control" name="lr_number[]" placeholder="L R Number" id="lrnumber" required ></td><td><input type="text" class="form-control" name="lr_emailid[]" placeholder="Email Id" id="lr_emailid" required ></td><td><input type="text" class="form-control" name="lr_destination[]" placeholder="Destination" id="lr_destination" required ></td></tr>';
+
+                $("#textA").append(age1);
+
+              }
+    }    
+}
+</script>
 <script>
 var j = jQuery.noConflict();
 j(function()

@@ -103,7 +103,7 @@ class SupportModel extends CI_Model {
 
 
 
-    public function new_device_additionclose($data)
+    public function new_device_additionclose($data,$data_lrnumber)
     {
        
        // echo '<pre>'; print_r($data); die;
@@ -112,7 +112,7 @@ class SupportModel extends CI_Model {
          $CI = &get_instance();
         $this->inventory_db = $CI->load->database('inventory_db', TRUE);
         $resultDevice_inv = "select itgc_id,device_imei,sim.phone_no,device_status,item_master.item_name from inventory.device left join inventory.sim on device.sim_id =sim.sim_id left join inventory.item_master on item_master.item_id=device.device_type  where device_imei='".$data['device_imei']."'";
-        //echo $resultDevice_inv; die;
+        // echo $resultDevice_inv; die;
         $query = $this->inventory_db->query($resultDevice_inv);
         //echo '<pre>'; print_r($query->result_array()); die;
              $query_arr= $query->result_array();
@@ -145,7 +145,7 @@ class SupportModel extends CI_Model {
         $this->matrix_db = $CI->load->database('matrix_db', TRUE);
         
          $SELECT1="SELECT * FROM matrix.devices where ffc_status='0' AND imei='".$dev_imei."'";
-         //echo $SELECT1; die;
+        // echo $SELECT1; die;
          $query=$this->matrix_db->query($SELECT1);
          $query1= $query->result_array();
          //echo '<pre>'; print_r($query); die;
@@ -490,10 +490,24 @@ class SupportModel extends CI_Model {
                 // $update_query="update kpm_tripdata set to_location= '".$data['destination']."',trip_start_date='".$data['date']."',contact_number='".$data['transport_mob_no']."',client_name='".$data['transport_name']."',client_company_name='".$data['customer_name']."',LR_Number='".$data['lr_number']."',driver_number='".$data['driver_mobile_no']."',add_type='old',warehouse='".$data['warehouse']."', tripplan='".$data['trip']."' , rate= '".$data['rate']."' where vehicle_number='".$data['serviceid']."' and trip_start_date='".$data['date']."' ";
 
                     $query = $matrix_db->query($sqltrip);
+                     $lr_insert_id=$matrix_db->insert_id();
                          $fp=fopen(log_path,'a+');
                          $string=date('d-m-Y H')." ".$sqltrip."\r";         
                          fwrite($fp,$string);        
-                         fclose($fp);   
+                         fclose($fp);
+
+
+                         for ($i = 0; $i < count($data_lrnumber); $i++) {
+
+          $sqllrdetails="INSERT INTO `kpm_lr_details` (`mapped_veh`, `l_r_number`, `email_id`, `destination`, `l_r_status`)VALUES ('".$lr_insert_id."', '".$data_lrnumber[$i]['lr_number']."', '".$data_lrnumber[$i]['lr_emailid']."', '".$data_lrnumber[$i]['lr_destination']."','1')";
+
+        $query = $matrix_db->query($sqllrdetails);
+        $fp=fopen(log_path,'a+');
+        $string=date('d-m-Y H')." ".$sqllrdetails."\r";
+        fwrite($fp,$string);
+        fclose($fp);
+            
+        }   
 
         
                  }
@@ -639,10 +653,10 @@ class SupportModel extends CI_Model {
     }*/
 
 
-	public function changeVehicle($data)
+	public function changeVehicle($data,$data_lrnumber)
    {
 
-
+           //echo print_r($data_lrnumber);die;
            $CI = &get_instance();
                    //$this->matrix_db = $CI->load->database('matrix_db', TRUE);
            $matrix_db = $this->load->database('matrix_db', TRUE);
@@ -700,10 +714,26 @@ $sqltrip="INSERT INTO `kpm_tripdata` (`vehicle_number`, `veh_reg`, `to_location`
                               VALUES ('".$data['device_no_old']."', '".$data['device_no_new']."', '".$data['destination']."', '00.00000000', '00.00000000', NULL, NULL, '".$data['date']."','".$data['source']."', '00.00000000', '00.00000000', NULL, NULL, '0', '0', '0', '1', '0', '".$data['transport_mob_no']."', '".$data['transport_name']."', '".$data['customer_name']."', '', '".$data['lr_number']."', NULL, '".$data['driver_mobile_no']."', 1,  'new', '".$data['warehouse']."', '".$data['trip']."', '".$data['rate']."', '".$data['sealno']."', '".$data['weight']."', '".$data['actual_start_time']."','".$data['groupId']."','".$data['device_imei']."')";
 
                                  $query = $matrix_db->query($sqltrip);
+                                 $lr_insert_id=$matrix_db->insert_id();
                                       $fp=fopen(log_path,'a+');
                                       $string=date('d-m-Y H')." ".$sqltrip."\r";
                                       fwrite($fp,$string);
                                       fclose($fp);
+
+
+        for ($i = 0; $i < count($data_lrnumber); $i++) {
+
+          $sqllrdetails="INSERT INTO `kpm_lr_details` (`mapped_veh`, `l_r_number`, `email_id`, `destination`, `l_r_status`)VALUES ('".$lr_insert_id."', '".$data_lrnumber[$i]['lr_number']."', '".$data_lrnumber[$i]['lr_emailid']."', '".$data_lrnumber[$i]['lr_destination']."','1')";
+
+        $query = $matrix_db->query($sqllrdetails);
+        $fp=fopen(log_path,'a+');
+        $string=date('d-m-Y H')." ".$sqllrdetails."\r";
+        fwrite($fp,$string);
+        fclose($fp);
+            
+        }
+
+        
 
                          if ($matrix_db->trans_status() === FALSE)
                          {

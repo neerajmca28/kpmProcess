@@ -98,9 +98,9 @@ $db['default'] = array(
 
 $db['inventory_db'] = array(
 	'dsn'	=> '',
-	'hostname' => '203.115.101.54',
-	'username' => 'visiontek11000',
-	'password' => '123456',
+	'hostname' => 'localhost',
+	'username' => 'root',
+	'password' => '',
 	'database' => 'inventory',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',

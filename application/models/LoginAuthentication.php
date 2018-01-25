@@ -4,8 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class LoginAuthentication extends CI_Model {
 	
 	public function loginCheck($username, $password) {
-		//echo $username;
-		//echo $password; die;
+		
 		$CI = &get_instance();
         $matrix_db=$this->matrix_db = $CI->load->database('matrix_db', TRUE);
 		$matrix_db->where("username", $username);
